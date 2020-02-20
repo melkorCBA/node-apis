@@ -21,11 +21,20 @@ export class UserRoutes{
             this.user_controller.create_user(req,res);
         });
         
-        //show
+        //show by user_name
         app.get('/users/:name', (req:Request, res:Response)=>{
             this.user_controller.show_user(req,res);
         });
-    
+
+        //Update by id
+        app.put('/users/:id',(req:Request, res:Response)=>{
+            this.user_controller.update_user(req,res);
+        });
+
+        //Delete by id
+        app.delete('/users/:id', (req:Request, res:Response)=>{
+
+        });
 
 
 
