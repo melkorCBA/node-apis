@@ -20,7 +20,11 @@ export class UserRoutes{
         app.post('/users', (req:Request,res:Response)=>{
             this.user_controller.create_user(req,res);
         });
-    
+        
+        //show
+        app.get('/users/:name', (req:Request, res:Response)=>{
+            this.user_controller.show_user(req,res);
+        });
     
 
 

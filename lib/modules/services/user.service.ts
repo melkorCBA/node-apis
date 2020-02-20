@@ -11,4 +11,9 @@ export class UserServices{
         users.find(callback);
 
     }
+
+    public showUser(user_name:String,callback:Function){
+        const query={user_name:user_name}
+        users.findOne(query,callback);
+    }
 }

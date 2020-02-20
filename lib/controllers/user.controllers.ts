@@ -21,10 +21,7 @@ export class UserController{
 
             this.user_service.createUser(user_detail,(err:any)=>{
                 if(err){
-                    console.log(err);
-                    //res.status(500).json({message:"internel server error"});
-                    //res.status(500).json({user_detail});
-                    console.log(user_detail.user_name);
+                    res.status(500).json({message:"internel server error"});
                 }
                 else{
                     res.status(200).json({message:"succsessfull"});
@@ -39,13 +36,33 @@ export class UserController{
     }
 
     public index_user(req:Request, res:Response){
-        this.user_service.indexUser((err:any, user_data:IUser)=>{
+        this.user_service.indexUser((err:any, user_index:IUser)=>{
             if(err){
                 res.status(400).json({message:"internal server error"});
             }
             else{
-                res.status(200).json({user_data});
+                res.status(200).json({user_index});
             }
         });
+    }
+
+    public show_user(req:Request, res:Response){
+        if(req.params.name){
+            this.user_service.showUser(req.params.name,(err:any, user_data:IUser)=>{
+                
+                if(err){
+                    res.status(500).json({message:"internal server error"})
+                }
+                
+                else if(user_data==null){
+                    res.status(500).json({message:"no such user"})
+                }
+                else{
+                    res.status(200).json({user_data});
+                }
+            });    
+        }
+        
+        
     }
 }
