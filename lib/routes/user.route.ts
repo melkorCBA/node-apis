@@ -7,10 +7,8 @@ export class UserRoutes{
 
     
     public route(app:Application){
-        //CREATE
-        app.post('/users', (req:Request,res:Response)=>{
-            this.user_controller.create_user(req,res);
-        });
+        
+
 
         //Index
         app.get('/users', (req:Request,res:Response)=>{
@@ -18,7 +16,10 @@ export class UserRoutes{
 
         });
 
-
+        //CREATE
+        app.post('/users', (req:Request,res:Response)=>{
+            this.user_controller.create_user(req,res);
+        });
     
     
 

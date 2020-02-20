@@ -21,7 +21,10 @@ export class UserController{
 
             this.user_service.createUser(user_detail,(err:any)=>{
                 if(err){
-                    res.status(500).json({message:"internel server error"});
+                    console.log(err);
+                    //res.status(500).json({message:"internel server error"});
+                    //res.status(500).json({user_detail});
+                    console.log(user_detail.user_name);
                 }
                 else{
                     res.status(200).json({message:"succsessfull"});
