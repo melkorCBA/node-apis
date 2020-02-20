@@ -20,4 +20,8 @@ export class UserServices{
     public updateUser(user_id:String, update_query:IUser, callback:Function){
         users.findByIdAndUpdate(user_id,update_query,callback);
     }
+
+    public deleteUser(user_id:String, callback:Function){
+        users.findByIdAndDelete(user_id, callback);
+    }
 }

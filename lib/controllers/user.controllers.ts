@@ -103,4 +103,20 @@ export class UserController {
 
 
     }
+
+    public delete_user(req:Request, res:Response){
+        if(req.params.id){
+            this.user_service.deleteUser(req.params.id, (err:any, deleted_userL:IUser)=>{
+                if(err){
+                    res.status(500).json({message:"internal server error"})
+                }
+                else{
+                    res.status(200).json({message:"successfully deleted"});
+                }
+            });
+        }
+        else{
+            res.status(500).json({message:"no id present"})
+        }
+    }
 }

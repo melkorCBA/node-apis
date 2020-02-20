@@ -31,9 +31,9 @@ export class UserRoutes{
             this.user_controller.update_user(req,res);
         });
 
-        //Delete by id
+        //Destroy by id
         app.delete('/users/:id', (req:Request, res:Response)=>{
-
+            this.user_controller.delete_user(req,res);
         });
 
 
