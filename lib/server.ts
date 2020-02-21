@@ -1,8 +1,15 @@
-// lib/server.ts
+import app from './config/app';
+import * as https from 'https';
+import * as path from 'path'
+import * as fs from 'fs';
 
-import app from "./config/app";
+
 const PORT = 3000;
+const httpsOptions = {
+    key: fs.readFileSync('lib/config/key.pem'),
+    cert: fs.readFileSync('lib/config/cert.pem')
+}
 
-app.listen(PORT, () => {
+https.createServer(httpsOptions, app).listen(PORT, () => {
     console.log('Express server listening on port ' + PORT);
 })
