@@ -4,18 +4,22 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as mongoose from "mongoose";
 import {UserRoutes} from '../routes/user.route'
+import {AuthRoutes}  from '../routes/auth.route'
 
 class App {
 
     public app: express.Application;
     public mongoURL: string="mongodb://localhost/Atlas"
     private user_routes=new UserRoutes();
+    private auth_routes=new AuthRoutes();
 
     constructor() {
         this.app = express();
         this.mongoSetup();
         this.config();        
         this.user_routes.route(this.app); //call route methode from routes.ts
+        this.auth_routes.route(this.app);
+        
         
     }
 
