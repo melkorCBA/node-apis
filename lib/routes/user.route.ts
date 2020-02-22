@@ -12,28 +12,28 @@ export class UserRoutes{
 
 
         //Index
-        app.get('/users', (req:Request,res:Response)=>{
+        app.get('/users', checkJwt,(req:Request,res:Response)=>{
             this.user_controller.index_user(req,res);
 
         });
 
         //CREATE
-        app.post('/users', (req:Request,res:Response)=>{
+        app.post('/users',checkJwt,(req:Request,res:Response)=>{
             this.user_controller.create_user(req,res);
         });
         
         //show by user_name
-        app.get('/users/:name', (req:Request, res:Response)=>{
+        app.get('/users/:name',checkJwt, (req:Request, res:Response)=>{
             this.user_controller.show_user(req,res);
         });
 
         //Update by id
-        app.put('/users/:id',(req:Request, res:Response)=>{
+        app.put('/users/:id', checkJwt,(req:Request, res:Response)=>{
             this.user_controller.update_user(req,res);
         });
 
         //Destroy by id
-        app.delete('/users/:id', (req:Request, res:Response)=>{
+        app.delete('/users/:id', checkJwt, (req:Request, res:Response)=>{
             this.user_controller.delete_user(req,res);
         });
 
