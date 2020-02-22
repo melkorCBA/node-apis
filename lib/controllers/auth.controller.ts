@@ -30,11 +30,10 @@ export class AuthController {
                     const token = jwt.sign(
                         { username: username },
                         config.jwtSecret,
-                        { expiresIn: "180" }
+                        { expiresIn: "600s" }
                     );
                     //send jwt in the response
-                    res.setHeader("token", token);
-                    res.status(200).json({ message: "succsessfull signup" });
+                    res.status(200).json({ message: "succsessfull login" , token});
 
 
                 }
