@@ -1,5 +1,6 @@
 import {Application, Request, Response} from 'express'
 import {UserController} from '../controllers/user.controller'
+import {checkJwt} from '../middleware/checkJWT'
 
 //define routes
 export class UserRoutes{

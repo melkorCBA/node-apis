@@ -9,6 +9,10 @@ export class AuthRoutes{
         app.post('/signup', (req:Request, res:Response)=>{
             this.auth_controller.signup(req,res);
         })
+
+        app.post('/login', (req:Request, res:Response)=>{
+            this.auth_controller.login(req,res);
+        })
     }
     
 
