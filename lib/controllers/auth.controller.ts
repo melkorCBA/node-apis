@@ -3,9 +3,14 @@ import { AdminServices } from '../modules/services/admin.service'
 import { IAdmin } from 'modules/models/admin.model';
 import * as jwt from 'jsonwebtoken'
 import config from '../config/config'
+import { IToken } from 'modules/models/token.model';
+import * as cryptoRandomString from 'crypto-random-string'
+import {TokenServices} from '../modules/services/token.service'
+
 
 export class AuthController {
     private admin_service = new AdminServices();
+    private token_service=new TokenServices();
 
     public signup(req: Request, res: Response) {
         //check if username and password are set
@@ -70,15 +75,31 @@ export class AuthController {
                         res.status(401).json({ message: "passwords do not match" })
                     }
                     else {
+                        let key=cryptoRandomString({length:10})
                         //Sing JWT valid for 1 hour
                         const token = jwt.sign(
                             { username: foundedUser.username },
-                            config.jwtSecret,
+                            key,
                             { expiresIn: "600s" }
                         );
-                        //send jwt in the response
-                        //res.setHeader("token", token);
-                        res.status(200).json({ message: "succsessfull login" , token});//send jwt in the response
+                        let token_details:IToken={
+                            token:token,
+                            key:key,
+                            username:foundedUser.username
+
+                        }
+                        this.token_service.createToken(token_details,(err)=>{
+                            if(err){
+                                res.status(400).json({message:"internal server error"});
+                            }
+                            else{
+                                //send jwt in the response
+                                //res.setHeader("token", token);
+                                res.status(200).json({ message: "succsessfull login" , token});//send jwt in the response
+                            }
+                        })
+
+                        
                     
                     }
                 }
