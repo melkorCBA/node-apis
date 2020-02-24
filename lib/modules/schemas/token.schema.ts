@@ -13,7 +13,8 @@ const  schema= new Schema({
         type:mongoose.Schema.Types.ObjectId,
             ref:"admin",
         
-    }
+    }, 
+    createdAt: { type: Date, expires: '10m', default: Date.now }
 });
 
 export default mongoose.model('token', schema);
