@@ -13,8 +13,13 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
         const bearer = bearerHeader.split(' ');
         const token = bearer[1];
         token_service.findByToken(token, (err:any, foundedToken:IToken) => {
+            if(foundedToken===null){
+                res.status(403).json({ message: "forbidden" })
+                return  
+            }
             if (err) {
-
+                res.status(500).json({message:'internal server error'})
+                return;
             }
             else {
                 const jwtSecret = foundedToken.key;
@@ -24,7 +29,7 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
                         return;
                     }
                     else {
-                        console.log(typeof (decoded))
+                        //console.log(typeof (decoded))
                         //Call the next middleware or controller
                         next();
                     }

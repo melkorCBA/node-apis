@@ -9,12 +9,13 @@ const  schema= new Schema({
         type:String
     },
 
-    username:{
+    admin_id:{
         type:mongoose.Schema.Types.ObjectId,
             ref:"admin",
         
     }, 
-    createdAt: { type: Date, expires: '10m', default: Date.now }
+    //expires after 3 minutes
+    createdAt: { type: Date, index: { expires: '3m' }, default: Date.now }
 });
 
 export default mongoose.model('token', schema);

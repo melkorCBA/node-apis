@@ -26,20 +26,32 @@ export class AuthController {
                 password: hashedPassword,
             }
 
-            this.admin_service.registorAdmin(admin_details, (err: any) => {
+            this.admin_service.registorAdmin(admin_details, (err: any, savedAdmin:IAdmin) => {
                 if (err) {
                     res.status(500).json({ message: "internel server error" });
                 }
                 else {
-                    //Sing JWT valid for 1 hour
+                    const key=cryptoRandomString(5)
+                    //Sing JWT valid for 2 minutes
                     const token = jwt.sign(
-                        { username: username },
-                        config.jwtSecret,
-                        { expiresIn: "600s" }
+                        { username: savedAdmin.username },
+                        key,
+                        { expiresIn: "120s" }
                     );
-                    //send jwt in the response
-                    res.status(200).json({ message: "succsessfull login" , token});
+                    let token_details:IToken={
+                        token:token,
+                        key:key,
+                       admin_id:savedAdmin._id
 
+                    }
+                    this.token_service.createToken(token_details,(err:any)=>{
+                        if(err){
+                            res.status(400).json({message:"internal server error:token creation"});
+                        }
+                        else{
+                            res.status(200).json({ message: "succsessfull login" , token});//send jwt in the response
+                        }
+                    })
 
                 }
             })
@@ -75,22 +87,24 @@ export class AuthController {
                         res.status(401).json({ message: "passwords do not match" })
                     }
                     else {
-                        let key=cryptoRandomString({length:10})
+                        const key=cryptoRandomString(5)
+                        //console.log(key);
                         //Sing JWT valid for 1 hour
                         const token = jwt.sign(
                             { username: foundedUser.username },
                             key,
-                            { expiresIn: "600s" }
+                            { expiresIn: "120s" }
                         );
                         let token_details:IToken={
                             token:token,
                             key:key,
-                            username:foundedUser.username
+                            admin_id:foundedUser._id
 
                         }
-                        this.token_service.createToken(token_details,(err)=>{
+                        this.token_service.createToken(token_details,(err:any)=>{
                             if(err){
-                                res.status(400).json({message:"internal server error"});
+                                console.log(err);
+                                res.status(400).json({message:"internal server error:token creation"});
                             }
                             else{
                                 //send jwt in the response
