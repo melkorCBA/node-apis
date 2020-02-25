@@ -31,7 +31,7 @@ export class AuthController {
                     res.status(500).json({ message: "internel server error" });
                 }
                 else {
-                    const key=cryptoRandomString({length:5})
+                    const key=cryptoRandomString(5)
                     //Sing JWT valid for 2 minutes
                     const token = jwt.sign(
                         { username: savedAdmin.username },
@@ -87,7 +87,7 @@ export class AuthController {
                         res.status(401).json({ message: "passwords do not match" })
                     }
                     else {
-                        const key=cryptoRandomString({length:5})
+                        const key=cryptoRandomString(5)
                         //Sing JWT valid for 1 hour
                         const token = jwt.sign(                             
                             { username: foundedUser.username },
